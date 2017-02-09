@@ -1,0 +1,107 @@
+<aura:component controller="tqps_ProductScheduleController" 
+                implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    
+    <aura:attribute name="productName" type="String" />
+    <aura:attribute name="schedules" type="sObject[]" />
+    
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="displayFilter" type="Boolean" default="false" />
+    <aura:attribute name="scheduleType" type="Integer" default="0" />
+    
+    <aura:attribute name="quantityTotal" type="Decimal" default="0" />
+    <aura:attribute name="revenueTotal" type="Decimal" default="0"/>
+    <aura:attribute name="enabledSchedulingType" type="Integer"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}" />
+    <aura:handler name="newSchedule" event="c:tqps_ProductScheduleEvent" action="{!c.addNewRow}"/>
+    <aura:handler name="removeSchedule" event="c:tqps_ProductScheduleEvent" action="{!c.removeRow}"/>
+    <aura:handler event="aura:waiting" action="{!c.waitingForResponse}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.responseReceived}"/>
+    <aura:handler name="hideFilter" event="c:tqps_ProductScheduleEvent" action="{!c.changeFilterIconColor}" />
+    
+    <aura:handler name="applyNewSchedule" event="c:tqps_ProductScheduleEvent" action="{!c.applyNewSchedule}"/> 
+    <aura:handler name="recalculateSchedule" event="c:tqps_ProductScheduleEvent" action="{!c.recalculateSchedule}"/>
+    
+    <aura:registerEvent name="hideFilter" type="c:tqps_ProductScheduleEvent" />    
+    <aura:registerEvent type="c:tqps_AlertEvent" name="manageAlert"/>
+
+    <div class="slds-page-header" role="banner">
+        <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media slds-no-space slds-grow">
+                    <c:tqps_AlertComp position="appHeader"/>
+                </div>
+            </div>
+
+            <aura:if isTrue="{!!empty(v.enabledSchedulingType)}">
+                <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                    <div class="slds-button-group" role="group">
+                        <aura:if isTrue="{!(equals(v.scheduleType,v.enabledSchedulingType) || v.enabledSchedulingType == 2)}" >
+                        	<button class="slds-button slds-button--neutral" onclick="{!c.saveSchedules}">Save</button>
+                        </aura:if>
+                        <button class="slds-button slds-button--neutral" onclick="{!c.cancelSchedules}">Cancel</button>                    
+                    </div>
+                    <button class="slds-button no-padding" onclick="{!c.showFilterSection}">
+                        <c:tqps_svg svgPath="/resource/slds090/assets/icons/action-sprite/svg/symbols.svg#filter"  aura:id="filterIcon"  name="email" containerClass="add-padding" category="action" size="x-small" class="slds-icon" /> 
+                    </button> 
+                </div>
+            </aura:if>
+
+        </div>
+    </div>
+    
+    <div class="row row-main">
+        <div class="slds-spinner_container no-show" aura:id="spinner">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--medium" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+        
+        <aura:if isTrue="{!!empty(v.schedules)}">
+        
+            <div class="slds-grid slds-wrap revenueScheduleContainer">
+                
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title--caps">
+                            <th scope="col" style="width:80px;">
+                                <div class="slds-truncate"></div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Schedule Date">Date</div>
+                            </th>
+                            <aura:if isTrue="{!(v.scheduleType == 1 || v.scheduleType == 2)}">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Product Quantity">Quantity</div>
+                                </th>
+                            </aura:if>
+                            <aura:if isTrue="{!(v.scheduleType == 0 || v.scheduleType == 2)}">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Revenue">Revenue</div>
+                                </th>
+                            </aura:if>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Comments">Comments</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration var="schedule" items="{!v.schedules}" indexVar="index">
+                            <c:tqps_ProductSchedule schedule="{!schedule}" index="{!index}" lastRowFlag="{!equals(index+1,v.schedules.length)}" 
+                                               scheduleType="{!v.scheduleType}" aura:id="scheduleRow" allowEditSchedule="{!(equals(v.scheduleType,v.enabledSchedulingType) || v.enabledSchedulingType == 2)}"/>
+                        </aura:iteration>
+                        <c:tqps_SumScheduleComp scheduleType="{!v.scheduleType}" quantityTotal="{!v.quantityTotal}" revenueTotal="{!v.revenueTotal}"></c:tqps_SumScheduleComp>
+                    </tbody>
+                </table> 
+                <aura:if isTrue="{!v.displayFilter}">
+                    <aside class="schedule-filter">
+                        <c:tqps_ScheduleFilter quantity="{!v.quantityTotal}" revenue="{!v.revenueTotal}" filterType="{!v.enabledSchedulingType}" />
+                    </aside>
+                </aura:if>
+        	</div>
+        </aura:if>
+    </div>
+
+</aura:component>

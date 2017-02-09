@@ -1,0 +1,30 @@
+<aura:component >
+    <aura:attribute name="type" Type="string" />
+    <aura:attribute name="message" Type="string" />
+    <aura:attribute name="displayFlag" Type="Boolean" default="false" />
+    <aura:attribute name="position" Type="String" />
+    
+    <aura:handler event="c:tqps_AlertEvent" action="{!c.manageAlert}"/>
+    
+    <aura:if isTrue="{!v.displayFlag}" >
+        <div class="{!'slds-notify_container '+(v.position == 'appHeader' ? 'header-margin':'')}">
+            <div class="{!'slds-notify slds-notify--toast slds-theme--'+v.type}" role="alert">
+                <button class="slds-button slds-notify__close slds-button--icon-inverse" onclick="{!c.hideAlert}">
+                    <c:tqps_svg svgPath="/resource/slds090/assets/icons/utility-sprite/svg/symbols.svg#close" assistiveText="Close" size="x-small" class="slds-icon slds-icon-text-success" />	
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <div class="slds-notify__content slds-grid">
+                    <aura:if isTrue="{!v.type=='error'}">
+                        <c:tqps_svg svgPath="/resource/slds090/assets/icons/utility-sprite/svg/symbols.svg#warning" size="small" class="slds-icon slds-icon-text-success slds-m-right--small" />	
+                        <aura:set attribute="else">
+                            <c:tqps_svg svgPath="/resource/slds090/assets/icons/utility-sprite/svg/symbols.svg#success" assistiveText="success " size="small" class="slds-icon slds-icon-text-success slds-m-right--small" />	
+                        </aura:set>
+                    </aura:if>
+                    <div class="slds-col slds-align-middle">
+                        <h3 class="slds-text-heading--small">{!v.message}</h3>
+                    </div>
+                </div>
+            </div>
+    	</div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event used to display/hide alerts on the app">
+    <aura:attribute name="alertPacket" type="object" />
+    <aura:attribute name="alertPosition" type="String" />
+</aura:event>

@@ -1,0 +1,61 @@
+<aura:component access="Global">
+    <aura:attribute name="filterType" type="String" />
+    
+    <aura:attribute name="quantity" type="Integer" />
+    <aura:attribute name="revenue" type="Decimal" />
+    <aura:attribute name="startDate" type="Date" />
+    <aura:attribute name="installmentPeriod" type="String" />
+    <aura:attribute name="installments" type="Integer" />
+    
+	
+    <li id="{!v.filterType}" role="treeitem" aria-level="1" aria-expanded="false">
+        
+        <div class="slds-tree__item no-left-padding" onclick="{!c.toggleFilterSection}">
+            <button class="slds-button icon-padding" aria-controls="{!v.filterType}">
+                <c:tqps_svg svgPath="/resource/slds090/assets/icons/utility-sprite/svg/symbols.svg#chevronright" size="x-small" class="slds-button__icon slds-icon-text-default" />	 
+            </button>
+            <h2 class="slds-align-middle">{!v.filterType}</h2>
+        </div>
+        
+        <ul class="slds-is-collapsed" role="group" aria-labelledby="{!v.filterType+'__label'}">
+            <li id="{!v.filterType+'-0'}" role="treeitem" aria-level="2">
+                <div class="slds-tree__item">
+                    <div class="slds-form--stacked filter-form ">
+                        
+                        <div class="slds-form-element"> 
+                            <aura:if isTrue="{!v.filterType== 'Quantity'}">
+                                <ui:inputNumber required="true" label="Quantity" format="#0" value="{!v.quantity}" aura:id="filter-quantity" class="slds-input" placeholder="1000"/>
+                                
+                                <aura:set attribute="else">
+                                    <ui:inputCurrency required="true" label="Revenue" value="{!v.revenue}" aura:id="filter-revenue" class="slds-input" placeholder="1000"/>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        
+                        <div class="slds-form-element">
+                            <ui:inputDate aura:id="filter-startDate" required="true" value="{!v.startDate}" label="Start Date" class="slds-input input-date" displayDatePicker="true"/> 
+                        </div>
+                        
+                        <div class="slds-form-element"> 
+                            <ui:inputSelect label="Installment Period" required="true" value="{!v.installmentPeriod}" aura:id="filter-installmentPeriod" class="slds-input slds-select_container">
+                                <ui:inputSelectOption text="--None--" label="--None--" value="true"/>
+                                <ui:inputSelectOption text="Daily" label="Daily"/>
+                                <ui:inputSelectOption text="Weekly" label="Weekly"/>
+                                <ui:inputSelectOption text="Monthly" label="Monthly"/>
+                                <ui:inputSelectOption text="Quarterly" label="Quarterly"/>
+                                <ui:inputSelectOption text="Yearly" label="Yearly"/>
+                                
+                            </ui:inputSelect>
+                        </div>
+                        
+                        <div class="slds-form-element"> 
+                            <ui:inputNumber aura:id="filter-installments" required="true" value="{!v.installments}" label="Installments" class="slds-input" placeholder="12"/> 
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </li>
+    
+</aura:component>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>tqps_ProductScheduleController</members>
+        <members>tqps_ProductScheduleControllerTest</members>
+        <members>tqps_ProductScheduleServices</members>
+        <members>tqps_ProductSchedulerStructure</members>
+        <members>tqps_TestDataFactory</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>tqps_AlertComp</members>
+        <members>tqps_AlertEvent</members>
+        <members>tqps_ProductSchedule</members>
+        <members>tqps_ProductScheduleEvent</members>
+        <members>tqps_ProductSchedulerApp</members>
+        <members>tqps_ProductSchedulerTable</members>
+        <members>tqps_ScheduleFilter</members>
+        <members>tqps_ScheduleFilterComp</members>
+        <members>tqps_SumScheduleComp</members>
+        <members>tqps_svg</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <version>35.0</version>
+</Package>

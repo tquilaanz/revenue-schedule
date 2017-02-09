@@ -1,0 +1,24 @@
+.THIS .display-new-true{
+    display : inline;
+    margin-left:7px;
+}
+
+.THIS .display-new-false{
+    display:none;
+}
+
+.THIS .adjustPadding{
+    padding:.3em;
+}
+
+.THIS .slds-right-shift{
+    position : absolute;
+    right:0px;
+    padding-left : 5px;
+    margin-top:4px;
+}
+
+.THIS .requiredFilter{
+    border-color : #c23934;
+    border-width:2px;
+}

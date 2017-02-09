@@ -1,0 +1,52 @@
+<aura:component >
+    <aura:attribute name="schedule" type="sObject" />
+    <aura:attribute name="lastRowFlag" type="string" />
+    <aura:attribute name="index" type="integer" />
+    <aura:attribute name="scheduleType" type="integer" default="0" />
+    <aura:attribute name="allowEditSchedule" type="Boolean" default="true" />
+    
+    <aura:registerEvent name="newSchedule" type="c:tqps_ProductScheduleEvent" />
+    <aura:registerEvent name="removeSchedule" type="c:tqps_ProductScheduleEvent" />
+    
+    <aura:handler name="change" value="{!v.schedule}" action="{!c.hightlightRequiredField}"/>
+    <tr>
+      <td>
+          <aura:if isTrue="{!v.allowEditSchedule}">
+              <div>
+                  <div class="slds-icon_container" onclick="{!c.removeSchedule}" style="cursor:pointer;">
+                      <c:tqps_svg svgPath="/resource/slds090/assets/icons/action-sprite/svg/symbols.svg#delete" name="delete" containerClass="slds-icon_container--circle adjustPadding" category="action" size="x-small" class="slds-icon centreAlign" />
+                  </div>
+                  
+                  <div class="{! 'display-new-' + v.lastRowFlag}" onclick="{!c.addNewSchedule}" style="cursor:pointer;">
+                      <c:tqps_svg svgPath="/resource/slds090/assets/icons/action-sprite/svg/symbols.svg#new" name="new" containerClass="slds-icon_container--circle adjustPadding" category="action" size="x-small" class="slds-icon centreAlign" />
+                  </div> 
+              </div>
+          </aura:if>
+      </td>
+      <td data-label="Schedule Date">
+        <div class="slds-truncate" title="Schedule Date">
+            <ui:inputDate aura:id="scheduleDate" required="true" class="slds-input" value="{!v.schedule.ScheduleDate}" displayDatePicker="true" /> 
+         </div>
+      </td>
+      <aura:if isTrue="{!(v.scheduleType == 1 || v.scheduleType == 2)}">
+          <td data-label="Product Quantity">
+            <div class="slds-truncate" title="Product Quantity">
+                <ui:inputNumber aura:id="quantity" class="slds-input" value="{!v.schedule.Quantity}" placeholder="0"/>  
+            </div>
+          </td>
+      </aura:if> 
+      <aura:if isTrue="{! (v.scheduleType == 0 || v.scheduleType== 2)}">
+          <td data-label="Revenue">
+              <div class="slds-truncate" title="Revenue">
+                  <ui:inputCurrency aura:id="revenue" class="slds-input field" value="{!v.schedule.Revenue}" placeholder="0"/>  
+              </div>
+          </td>
+      </aura:if>
+      <td data-label="Comments">
+        <div class="slds-truncate" title="Comments">
+        	<ui:inputText aura:id="comments" class="slds-input" value="{!v.schedule.Description}" placeholder="My Comments" />  
+        </div>
+      </td>
+    </tr>
+	
+</aura:component>

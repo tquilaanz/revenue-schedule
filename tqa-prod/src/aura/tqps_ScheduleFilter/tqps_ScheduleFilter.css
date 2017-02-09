@@ -1,0 +1,12 @@
+.THIS.slds-no-border-radius{
+    border-radius : 0;
+}
+
+.THIS .filter-form-input{
+    margin-bottom : 10px;
+    margin-top : 5px;
+}
+
+.THIS .alignButton-right{
+    float:right; 
+}

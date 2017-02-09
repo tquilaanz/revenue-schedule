@@ -1,0 +1,22 @@
+.THIS .no-show{
+    display:none !important;
+}
+
+.THIS .no-padding{
+	padding:0px;    
+}
+
+.THIS .add-padding{
+	padding:0 5px;    
+}
+
+.THIS .schedule-filter{
+    position : absolute;
+    width : 350px;
+    right : 0;
+}
+
+.THIS .revenueScheduleContainer{
+    width : 100% !important;
+    margin-left:0px;
+}

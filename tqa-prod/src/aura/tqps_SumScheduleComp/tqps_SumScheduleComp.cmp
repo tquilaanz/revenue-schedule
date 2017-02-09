@@ -1,0 +1,32 @@
+<aura:component >
+    <aura:attribute name="quantityTotal" type="Decimal" default="0" />
+    <aura:attribute name="revenueTotal" type="Decimal" default="0"/>
+    <aura:attribute name="scheduleType" type="String" />
+    
+    <aura:registerEvent name="recalculateSchedule" type="c:tqps_ProductScheduleEvent" />
+    
+	<tr>
+        <td>
+        </td>
+        <td>
+            <h2 class="slds-center-align slds_total-highlight">Total</h2>
+        </td>
+        <aura:if isTrue="{!(v.scheduleType == 1 || v.scheduleType == 2)}">
+            <td data-label="Product Quantity">
+                <div class="slds-truncate" title="Product Quantity">
+                    <ui:outputNumber class="slds_total-highlight" aura:id="quantityTotal" value="{!v.quantityTotal}"/>  
+                </div>
+            </td>
+        </aura:if> 
+        <aura:if isTrue="{! (v.scheduleType == 0 || v.scheduleType== 2)}">
+            <td data-label="Revenue">
+                <div class="slds-truncate" title="Revenue">
+                    <ui:outputCurrency class="slds_total-highlight field" aura:id="revenueTotal" value="{!v.revenueTotal}"/>  
+                </div>
+            </td>
+        </aura:if>
+        <td>
+            <button class="slds-button slds-button--brand alignButton-right filter-form-input" onclick="{!c.recalculateTotal}">Recalculate</button>
+        </td>
+    </tr>	
+</aura:component>

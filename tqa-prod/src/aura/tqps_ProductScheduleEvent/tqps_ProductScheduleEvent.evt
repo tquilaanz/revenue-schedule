@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Add new schedule row">
+    <aura:attribute name="index" type="Integer" />
+    
+    <aura:attribute name="schedulePacket" type="Object[]" />
+</aura:event>

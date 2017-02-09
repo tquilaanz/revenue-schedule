@@ -1,0 +1,13 @@
+.THIS {
+    position : initial !important;
+}
+
+.THIS .slds-notify--toast{
+    margin : 0 0 10px 0;
+    min-width:100%;
+    padding : 7px 15px 7px 10px;
+}
+
+.THIS.header-margin{
+    margin-right:5% !important;
+}

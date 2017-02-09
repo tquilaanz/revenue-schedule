@@ -1,0 +1,62 @@
+<aura:component >
+
+    <aura:registerEvent name="hideFilter" type="c:tqps_ProductScheduleEvent" />
+    <aura:registerEvent name="applyNewSchedule" type="c:tqps_ProductScheduleEvent"/>
+    <aura:attribute type="String" name="revenueFilter" default="0" />
+    
+    <aura:attribute name="quantity" type="Decimal" default="0" />
+    <aura:attribute name="revenue" type="Decimal" default="0"/>
+    <aura:attribute type="Integer" name="filterType" />
+    
+    <aura:registerEvent type="c:tqps_AlertEvent" name="manageAlert"/>
+
+    <div class="slds-box slds-box--small slds-theme--default slds-text-align--left slds-no-border-radius">
+        <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap">
+            <div class="slds-form--stacked slds-grow slds-scrollable--y">
+                <div class="slds-filters">
+                    <div class="slds-filters__header slds-grid slds-has-divider--bottom-space">
+                        <h4 class="slds-align-middle slds-text-heading--small">Revenue Scheduler</h4>
+                        <button class="slds-button slds-col--bump-left slds-button--icon slds-button--icon-small" onclick="{!c.closeFilter}">
+                            <c:tqps_svg svgPath="/resource/slds090/assets/icons/utility-sprite/svg/symbols.svg#forward" assistiveText="Close Filter Panel" size="x-small" class="slds-icon slds-icon-text-default" />	 
+                        </button>
+                    </div>
+                    <div class="slds-filters__body">
+                        <c:tqps_AlertComp position="filterHeader"/>
+                        
+                        <div class="slds-form--stacked filter-form ">
+                            <div class="slds-form-element"> 
+                                <ui:inputSelect value="{!v.revenueFilter}" label="Revenue Schedule Type" required="true" aura:id="filter-installmentPeriod" class="slds-input slds-select_container filter-form-input">
+                                    <aura:if isTrue="{!v.filterType == 0 || v.filterType == 2}">
+                                    	<ui:inputSelectOption text="0" label="Revenue Based" value="true"/>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.filterType == 1 || v.filterType == 2}">
+                                    	<ui:inputSelectOption text="1" label="Quantity Based"/>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.filterType == 2}">
+                                    	<ui:inputSelectOption text="2" label="Both Quantity and Revenue Based"/>
+                                    </aura:if>
+                                </ui:inputSelect>
+                            </div>
+ 
+                            <div class="slds-tree_container" role="application">
+                                <ul class="slds-tree" role="tree" aria-labelledby="treeheading" aria-activedescendant="tree0-node1">
+                                    <aura:if isTrue="{!v.revenueFilter == '1' || v.revenueFilter =='2'}" >
+                                        <c:tqps_ScheduleFilterComp filterType="Quantity" aura:id="revenueFilter" quantity="{!v.quantity}" />
+                                    </aura:if>
+                                    
+                                    <aura:if isTrue="{!v.revenueFilter == '0' || v.revenueFilter =='2'}" >
+                                        <c:tqps_ScheduleFilterComp filterType="Revenue" aura:id="revenueFilter" revenue="{!v.revenue}" />
+                                    </aura:if>
+                                    
+                                </ul>
+                                <button class="slds-button slds-button--neutral alignButton-right filter-form-input" onclick="{!c.applySchedule}">Apply Schedule</button>
+                                                       
+                            </div>
+                        </div>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>
